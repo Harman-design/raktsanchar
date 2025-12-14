@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'rider/rider_introduction_page.dart';
 import 'rider/screens/rider_login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://ynncpmsafoijhvfqzkgp.supabase.co',
+    anonKey: 'sb_publishable_Su1LMFzGXNx2_fOUUj9J7g_y4WzongA',
+  );
+
   runApp(const MyApp());
 }
+
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,9 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RiderIntroductionPage(),
+      home: const RiderIntroductionPage(),
       routes: {
-        "/rider-login": (context) => const RiderLoginPage(),
+        "/login": (context) => const RiderLoginPage(),
       },
     );
   }

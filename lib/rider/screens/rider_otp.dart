@@ -1,60 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../main.dart';
-import '../../rider/otp_page.dart';
-import './rider_otp.dart';
 
-class RiderLoginPage extends StatefulWidget {
-  const RiderLoginPage({super.key});
+class RiderOtpPage extends StatefulWidget {
+  final String phone;
+  const RiderOtpPage({super.key, required this.phone});
 
   @override
-  State<RiderLoginPage> createState() => _RiderLoginPageState();
+  State<RiderOtpPage> createState() => _RiderOtpPageState();
 }
 
-class _RiderLoginPageState extends State<RiderLoginPage> {
-  final TextEditingController _phoneController = TextEditingController();
+class _RiderOtpPageState extends State<RiderOtpPage> {
+  final TextEditingController _otpController = TextEditingController();
   bool _isLoading = false;
 
   // -------------------------
-  // OTP SEND LOGIC
+  // SHOW MESSAGE
   // -------------------------
-  Future<void> _sendOtp() async {
-    final phone = _phoneController.text.trim();
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 
-    if (phone.length != 10) {
-      _showMessage("Enter a valid 10-digit phone number");
+  // -------------------------
+  // VERIFY OTP
+  // -------------------------
+  Future<void> _verifyOtp() async {
+    final otp = _otpController.text.trim();
+
+    if (otp.length != 6) {
+      _showMessage("Enter valid 6-digit OTP");
       return;
     }
-
-    final formattedPhone = "+91$phone";
 
     setState(() => _isLoading = true);
 
     try {
-      await supabase.auth.signInWithOtp(phone: formattedPhone);
+      // 1️⃣ Verify OTP
+      await supabase.auth.verifyOTP(
+        phone: widget.phone,
+        token: otp,
+        type: OtpType.sms,
+      );
+
+      // 2️⃣ Get logged-in user
+      final user = supabase.auth.currentUser;
+
+      if (user == null) {
+        _showMessage("Login failed. Try again.");
+        return;
+      }
+
+      // 3️⃣ INSERT / UPSERT into riders table (THIS IS THE KEY PART)
+      await supabase.from('riders').upsert({
+        'user_id': user.id,
+        'is_active': true,
+      });
 
       if (!mounted) return;
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => RiderOtpPage(phone: formattedPhone)),
-      );
+      // 4️⃣ Navigate to Rider Dashboard
+      Navigator.pushReplacementNamed(context, '/rider/home');
     } on AuthException catch (e) {
       _showMessage(e.message);
-    } catch (_) {
-      _showMessage("Something went wrong. Try again.");
+    } catch (e) {
+      _showMessage("Invalid OTP or server error");
     }
 
     setState(() => _isLoading = false);
-  }
-
-  // -------------------------
-  // UI HELPERS
-  // -------------------------
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   // -------------------------
@@ -71,12 +85,11 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
             const SizedBox(height: 35),
             _buildTitle(),
             const SizedBox(height: 30),
-            _buildPhoneInput(),
+            _buildOtpInput(),
             const SizedBox(height: 30),
-            _buildSendOtpButton(),
+            _buildVerifyButton(),
             const SizedBox(height: 20),
-            _buildFooterText(),
-            const SizedBox(height: 50),
+            _buildFooter(),
           ],
         ),
       ),
@@ -84,7 +97,7 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
   }
 
   // -------------------------
-  // WIDGET SECTIONS
+  // UI SECTIONS
   // -------------------------
   Widget _buildHeader() {
     return Container(
@@ -111,7 +124,7 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
           ),
           const SizedBox(height: 6),
           const Text(
-            "The Pulse of Life, Delivered.",
+            "Verify your number",
             style: TextStyle(color: Colors.white70, fontSize: 16),
           ),
         ],
@@ -121,22 +134,22 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
 
   Widget _buildTitle() {
     return Column(
-      children: const [
-        Text(
-          "Confirm Your Identity",
+      children: [
+        const Text(
+          "Enter Verification Code",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          "Enter your phone number to receive a\nverification code",
+          "OTP sent to ${widget.phone}",
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.grey),
+          style: const TextStyle(fontSize: 15, color: Colors.grey),
         ),
       ],
     );
   }
 
-  Widget _buildPhoneInput() {
+  Widget _buildOtpInput() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30),
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -144,33 +157,28 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: Colors.teal.shade300, width: 1.4),
       ),
-      child: Row(
-        children: [
-          Image.asset("assets/india_flag.png", height: 24),
-          const SizedBox(width: 8),
-          const Text(
-            "+91",
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                hintText: "Enter Phone Number",
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ],
+      child: TextField(
+        controller: _otpController,
+        keyboardType: TextInputType.number,
+        maxLength: 6,
+        decoration: const InputDecoration(
+          hintText: "Enter OTP",
+          counterText: "",
+          border: InputBorder.none,
+        ),
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 20,
+          letterSpacing: 8,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
-  Widget _buildSendOtpButton() {
+  Widget _buildVerifyButton() {
     return GestureDetector(
-      onTap: _isLoading ? null : _sendOtp,
+      onTap: _isLoading ? null : _verifyOtp,
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -183,7 +191,7 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
           child: _isLoading
               ? const CircularProgressIndicator(color: Colors.white)
               : const Text(
-                  "Send Verification Code",
+                  "Verify & Continue",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -195,10 +203,10 @@ class _RiderLoginPageState extends State<RiderLoginPage> {
     );
   }
 
-  Widget _buildFooterText() {
+  Widget _buildFooter() {
     return const Text(
-      "Your number is secure and used for verification only",
-      style: TextStyle(fontSize: 12, color: Colors.grey),
+      "Didn’t receive OTP? Wait 60 seconds",
+      style: TextStyle(fontSize: 13, color: Colors.grey),
     );
   }
 }
