@@ -52,7 +52,7 @@ class _RiderIntroductionPageState extends State<RiderIntroductionPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/logo.jpeg",
+                "assets/logo.png",
                 height: 400,
               ),
               const SizedBox(height: 20),
