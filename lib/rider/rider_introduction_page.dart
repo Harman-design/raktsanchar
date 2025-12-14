@@ -29,9 +29,10 @@ class _RiderIntroductionPageState extends State<RiderIntroductionPage>
 
     _controller.forward();
 
-    // navigate to rider login (design unchanged)
+    // ⏱ Auto redirect to login after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, "/rider-login");
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/login');
     });
   }
 

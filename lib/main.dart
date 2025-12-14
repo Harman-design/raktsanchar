@@ -1,8 +1,9 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'rider/rider_introduction_page.dart';
 import 'rider/screens/rider_login.dart';
+import 'rider/screens/rider_dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,10 +25,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const RiderLoginPage(),
+      home: const AuthGate(),
       routes: {
-        "/login": (context) => const RiderLoginPage(),
+        '/login': (_) => const RiderLoginPage(),
+        '/rider/dashboard': (_) => const RiderDashboard(),
       },
     );
+  }
+}
+
+/// ---------------------------
+/// AUTH GATE
+/// ---------------------------
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final session = supabase.auth.currentSession;
+
+    // Already logged in → skip intro
+    if (session != null) {
+      return const RiderDashboard();
+    }
+
+    // Not logged in → show intro
+    return const RiderIntroductionPage();
   }
 }

@@ -1,3 +1,4 @@
+//lib/rider/screens/rider_otp.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../main.dart';
@@ -48,18 +49,16 @@ class _RiderOtpPageState extends State<RiderOtpPage> {
       final user = supabase.auth.currentUser;
       if (user == null) throw Exception("User not found");
 
-      final existing = await supabase
-          .from('riders')
-          .select('id')
-          .eq('user_id', user.id)
-          .maybeSingle();
+      await supabase.from('riders').upsert({
+        'user_id': user.id,
+        'is_active': true,
+      }, onConflict: 'user_id');
 
-      if (existing == null) {
-        await supabase.from('riders').insert({
-          'user_id': user.id,
-          'is_active': true,
-        });
-      }
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/rider/dashboard',
+        (route) => false,
+      );
 
       _showMessage("OTP verified successfully ✅");
     } on AuthException catch (e) {
