@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'introduction_page.dart';
+import 'rider/rider_introduction_page.dart';
+import 'rider/screens/rider_login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const IntroductionPage(),
-
+      home: RiderIntroductionPage(),
       routes: {
-        "/login": (context) => Scaffold(
-          body: Center(child: Text("Login Page Coming Soon")),
-        ),
+        "/rider-login": (context) => const RiderLoginPage(),
       },
     );
   }

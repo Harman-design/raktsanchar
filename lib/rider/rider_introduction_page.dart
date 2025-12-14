@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IntroductionPage extends StatefulWidget {
-  const IntroductionPage({super.key});
+class RiderIntroductionPage extends StatefulWidget {
+  const RiderIntroductionPage({super.key});
 
   @override
-  State<IntroductionPage> createState() => _IntroductionPageState();
+  State<RiderIntroductionPage> createState() => _RiderIntroductionPageState();
 }
 
-class _IntroductionPageState extends State<IntroductionPage>
+class _RiderIntroductionPageState extends State<RiderIntroductionPage>
     with SingleTickerProviderStateMixin {
 
   late AnimationController _controller;
@@ -29,8 +29,9 @@ class _IntroductionPageState extends State<IntroductionPage>
 
     _controller.forward();
 
+    // navigate to rider login (design unchanged)
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, "/login");
+      Navigator.pushReplacementNamed(context, "/rider-login");
     });
   }
 
