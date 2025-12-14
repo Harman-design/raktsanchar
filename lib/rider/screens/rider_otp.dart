@@ -18,15 +18,17 @@ class _RiderOtpPageState extends State<RiderOtpPage> {
   // SHOW MESSAGE
   // -------------------------
   void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   // -------------------------
   // VERIFY OTP
   // -------------------------
   Future<void> _verifyOtp() async {
+    if (_isLoading) return;
+
     final otp = _otpController.text.trim();
 
     if (otp.length != 6) {
@@ -37,35 +39,33 @@ class _RiderOtpPageState extends State<RiderOtpPage> {
     setState(() => _isLoading = true);
 
     try {
-      // 1️⃣ Verify OTP
       await supabase.auth.verifyOTP(
         phone: widget.phone,
         token: otp,
         type: OtpType.sms,
       );
 
-      // 2️⃣ Get logged-in user
       final user = supabase.auth.currentUser;
+      if (user == null) throw Exception("User not found");
 
-      if (user == null) {
-        _showMessage("Login failed. Try again.");
-        return;
+      final existing = await supabase
+          .from('riders')
+          .select('id')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+      if (existing == null) {
+        await supabase.from('riders').insert({
+          'user_id': user.id,
+          'is_active': true,
+        });
       }
 
-      // 3️⃣ INSERT / UPSERT into riders table (THIS IS THE KEY PART)
-      await supabase.from('riders').upsert({
-        'user_id': user.id,
-        'is_active': true,
-      });
-
-      if (!mounted) return;
-
-      // 4️⃣ Navigate to Rider Dashboard
-      Navigator.pushReplacementNamed(context, '/rider/home');
+      _showMessage("OTP verified successfully ✅");
     } on AuthException catch (e) {
       _showMessage(e.message);
     } catch (e) {
-      _showMessage("Invalid OTP or server error");
+      _showMessage("Login completed, but rider setup failed");
     }
 
     setState(() => _isLoading = false);

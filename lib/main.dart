@@ -1,3 +1,4 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'rider/rider_introduction_page.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const RiderIntroductionPage(),
+      home: const RiderLoginPage(),
       routes: {
         "/login": (context) => const RiderLoginPage(),
       },
