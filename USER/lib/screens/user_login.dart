@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../main.dart';
-import '../user_otp2.dart';
-import './user_otp1.dart';
 
-class userLoginPage extends StatefulWidget {
-  const userLoginPage({super.key});
+import '../../main.dart';
+import 'user_otp1.dart';
+
+class UserLoginPage extends StatefulWidget {
+  const UserLoginPage({super.key});
 
   @override
-  State<userLoginPage> createState() => _userLoginPageState();
+  State<UserLoginPage> createState() => _UserLoginPageState();
 }
 
-class _userLoginPageState extends State<userLoginPage> {
+class _UserLoginPageState extends State<UserLoginPage> {
   final TextEditingController _phoneController = TextEditingController();
   bool _isLoading = false;
 
   // -------------------------
-  // OTP SEND LOGIC
+  // SEND OTP
   // -------------------------
   Future<void> _sendOtp() async {
     final phone = _phoneController.text.trim();
@@ -31,13 +31,17 @@ class _userLoginPageState extends State<userLoginPage> {
     setState(() => _isLoading = true);
 
     try {
-      await supabase.auth.signInWithOtp(phone: formattedPhone);
+      await supabase.auth.signInWithOtp(
+        phone: formattedPhone,
+      );
 
       if (!mounted) return;
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => userOtpPage(phone: formattedPhone)),
+        MaterialPageRoute(
+          builder: (_) => UserOtpPage(phone: formattedPhone),
+        ),
       );
     } on AuthException catch (e) {
       _showMessage(e.message);
@@ -48,13 +52,9 @@ class _userLoginPageState extends State<userLoginPage> {
     setState(() => _isLoading = false);
   }
 
-  // -------------------------
-  // UI HELPERS
-  // -------------------------
   void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   // -------------------------
@@ -120,8 +120,8 @@ class _userLoginPageState extends State<userLoginPage> {
   }
 
   Widget _buildTitle() {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           "Confirm Your Identity",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -142,7 +142,7 @@ class _userLoginPageState extends State<userLoginPage> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.teal.shade300, width: 1.4),
+        border: Border.all(color: Colors.teal, width: 1.4),
       ),
       child: Row(
         children: [
@@ -158,7 +158,7 @@ class _userLoginPageState extends State<userLoginPage> {
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
-                hintText: "Enter Phone Number",
+                hintText: "Enter phone number",
                 border: InputBorder.none,
               ),
             ),
@@ -197,7 +197,7 @@ class _userLoginPageState extends State<userLoginPage> {
 
   Widget _buildFooterText() {
     return const Text(
-      "Your number is secure and used for verification only",
+      "Your number is secure and used only for verification",
       style: TextStyle(fontSize: 12, color: Colors.grey),
     );
   }

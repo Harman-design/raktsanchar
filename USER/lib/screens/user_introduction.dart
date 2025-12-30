@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class userIntroductionPage extends StatefulWidget {
-  const userIntroductionPage({super.key});
+class UserIntroductionPage extends StatefulWidget {
+  const UserIntroductionPage({super.key});
 
   @override
-  State<userIntroductionPage> createState() => _userIntroductionPageState();
+  State<UserIntroductionPage> createState() => _UserIntroductionPageState();
 }
 
-class _userIntroductionPageState extends State<userIntroductionPage>
+class _UserIntroductionPageState extends State<UserIntroductionPage>
     with SingleTickerProviderStateMixin {
 
   late AnimationController _controller;
@@ -29,10 +29,10 @@ class _userIntroductionPageState extends State<userIntroductionPage>
 
     _controller.forward();
 
-    // ⏱ Auto redirect to login after 3 seconds
+    // Auto-redirect to login after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/user/login');
     });
   }
 
@@ -54,9 +54,9 @@ class _userIntroductionPageState extends State<userIntroductionPage>
             children: [
               Image.asset(
                 "assets/logo.png",
-                height: 400,
+                height: 220,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
               const Text(
                 "Raktsanchar",
                 style: TextStyle(

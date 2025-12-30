@@ -1,32 +1,29 @@
-//lib/user/screens/user_otp.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import '../../main.dart';
 
-class userOtpPage extends StatefulWidget {
+class UserOtpPage extends StatefulWidget {
   final String phone;
-  const userOtpPage({super.key, required this.phone});
+
+  const UserOtpPage({
+    super.key,
+    required this.phone,
+  });
 
   @override
-  State<userOtpPage> createState() => _userOtpPageState();
+  State<UserOtpPage> createState() => _UserOtpPageState();
 }
 
-class _userOtpPageState extends State<userOtpPage> {
+class _UserOtpPageState extends State<UserOtpPage> {
   final TextEditingController _otpController = TextEditingController();
   bool _isLoading = false;
 
-  // -------------------------
-  // SHOW MESSAGE
-  // -------------------------
   void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
-  // -------------------------
-  // VERIFY OTP
-  // -------------------------
   Future<void> _verifyOtp() async {
     if (_isLoading) return;
 
@@ -63,16 +60,13 @@ class _userOtpPageState extends State<userOtpPage> {
       _showMessage("OTP verified successfully ✅");
     } on AuthException catch (e) {
       _showMessage(e.message);
-    } catch (e) {
+    } catch (_) {
       _showMessage("Login completed, but user setup failed");
     }
 
     setState(() => _isLoading = false);
   }
 
-  // -------------------------
-  // UI
-  // -------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,9 +89,6 @@ class _userOtpPageState extends State<userOtpPage> {
     );
   }
 
-  // -------------------------
-  // UI SECTIONS
-  // -------------------------
   Widget _buildHeader() {
     return Container(
       width: double.infinity,

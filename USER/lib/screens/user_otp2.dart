@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'main.dart';
+
+import '../../main.dart';
 
 class OtpPage extends StatefulWidget {
   final String phone;
-  const OtpPage({super.key, required this.phone});
+
+  const OtpPage({
+    super.key,
+    required this.phone,
+  });
 
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
 
 class _OtpPageState extends State<OtpPage> {
-  final otpController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
   bool loading = false;
 
   Future<void> verifyOtp() async {
@@ -28,7 +33,8 @@ class _OtpPageState extends State<OtpPage> {
         const SnackBar(content: Text("Login Successful 🎉")),
       );
 
-      // TODO: Navigate to rider dashboard
+      // Navigate manually if you want:
+      // Navigator.pushNamed(context, '/user/dashboard');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Invalid OTP")),
