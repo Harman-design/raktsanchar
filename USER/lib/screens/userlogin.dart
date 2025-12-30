@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../main.dart';
-import '../../user/otp_page.dart';
-import './user_otp.dart';
+import '../user_otp2.dart';
+import './user_otp1.dart';
 
 class userLoginPage extends StatefulWidget {
   const userLoginPage({super.key});
