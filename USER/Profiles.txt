@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raktsanchar Profile &amp; Medical Info</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cf2c20",
+                        "primary-dark": "#C6362B",
+                        "background-light": "#ffffff",
+                        "background-dark": "#212121",
+                        "surface-light": "#F9FAFB",
+                        "border-light": "#F1F5F9",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-shadow {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#212121] dark:text-white min-h-screen">
+<div class="max-w-[430px] mx-auto min-h-screen flex flex-col pb-10">
+<!-- Header Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-border-light dark:border-white/5">
+<h1 class="text-xl font-extrabold tracking-tight">Profile</h1>
+<button class="text-primary font-bold text-base hover:opacity-80 transition-opacity">Edit</button>
+</header>
+<main class="flex-1 px-6 pt-6 space-y-8">
+<!-- Profile Header Card -->
+<section class="flex flex-col items-center text-center">
+<div class="relative">
+<div class="w-32 h-32 rounded-full border-4 border-white dark:border-zinc-800 ios-shadow overflow-hidden bg-zinc-100">
+<div class="w-full h-full bg-cover bg-center" data-alt="Portrait of a young smiling man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqgoyln87Drpn5eqVtJ7kMDYmVWgiTkPZ-Ttc_kr-V5-A6u-pmww5rKOkEU0DhgT7HwlFR6ssrHZPZysttlywT3bhi9vvmU3-mFY7GtcSKcWqfXyoy7mNVOvQC0heRZGyIprYNX6Ly3SCDk6odScFJV-fz6e7-6rPzhnFotIax48rtRpct8y7ZpH8MlL32Me9DtAZXosbkPOlxzMForpyua7pjPC5hESp5uMtpFC9zOUOf3RQpEnNuFm7zZJhQiqqKq-zOjGqyiQQD');">
+</div>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-1.5 border-4 border-white dark:border-zinc-800">
+<span class="material-symbols-outlined text-[18px] block font-bold">verified</span>
+</div>
+</div>
+<div class="mt-4">
+<h2 class="text-2xl font-bold tracking-tight">Siddharth Sharma</h2>
+<p class="text-[#616161] dark:text-zinc-400 font-medium text-sm flex items-center justify-center gap-1">
+                        Verified Donor <span class="text-primary">•</span> Member since 2023
+                    </p>
+</div>
+</section>
+<!-- Vital Stats (TextGrid modified for Swiggy style) -->
+<section>
+<div class="grid grid-cols-3 gap-3">
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-4 flex flex-col items-center justify-center border border-primary/10">
+<span class="text-primary font-extrabold text-2xl">O+</span>
+<span class="text-[#616161] dark:text-zinc-400 text-xs font-semibold uppercase tracking-wider mt-1">Blood</span>
+</div>
+<div class="bg-surface-light dark:bg-white/5 rounded-xl p-4 flex flex-col items-center justify-center border border-border-light dark:border-white/10">
+<span class="text-[#212121] dark:text-white font-extrabold text-2xl">28</span>
+<span class="text-[#616161] dark:text-zinc-400 text-xs font-semibold uppercase tracking-wider mt-1">Age</span>
+</div>
+<div class="bg-surface-light dark:bg-white/5 rounded-xl p-4 flex flex-col items-center justify-center border border-border-light dark:border-white/10">
+<span class="text-[#212121] dark:text-white font-extrabold text-2xl">74<span class="text-sm">kg</span></span>
+<span class="text-[#616161] dark:text-zinc-400 text-xs font-semibold uppercase tracking-wider mt-1">Weight</span>
+</div>
+</div>
+</section>
+<!-- Personal Information Section -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold tracking-tight">Personal Details</h3>
+</div>
+<div class="bg-surface-light dark:bg-white/5 rounded-xl p-1 divide-y divide-border-light dark:divide-white/5 border border-border-light dark:border-white/5 shadow-sm">
+<div class="p-4 flex items-center gap-4">
+<span class="material-symbols-outlined text-zinc-400">mail</span>
+<div class="flex flex-col">
+<span class="text-xs text-zinc-500 font-medium">Email</span>
+<span class="font-semibold text-[15px]">siddharth.s@example.com</span>
+</div>
+</div>
+<div class="p-4 flex items-center gap-4">
+<span class="material-symbols-outlined text-zinc-400">call</span>
+<div class="flex flex-col">
+<span class="text-xs text-zinc-500 font-medium">Phone</span>
+<span class="font-semibold text-[15px]">+91 98765 43210</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Emergency Contacts Section -->
+<section class="space-y-3">
+<h3 class="text-lg font-bold tracking-tight">Emergency Contacts</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-white dark:bg-zinc-800 rounded-xl ios-shadow border border-border-light dark:border-white/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-500">person</span>
+</div>
+<div>
+<p class="font-bold text-[15px]">Anita Sharma</p>
+<p class="text-xs text-zinc-500">Mother</p>
+</div>
+</div>
+<a class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary" href="tel:+">
+<span class="material-symbols-outlined font-bold">call</span>
+</a>
+</div>
+<div class="flex items-center justify-between p-4 bg-white dark:bg-zinc-800 rounded-xl ios-shadow border border-border-light dark:border-white/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-500">person</span>
+</div>
+<div>
+<p class="font-bold text-[15px]">Rahul Varma</p>
+<p class="text-xs text-zinc-500">Brother</p>
+</div>
+</div>
+<a class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary" href="tel:+">
+<span class="material-symbols-outlined font-bold">call</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Medical Notes Section -->
+<section class="space-y-3">
+<h3 class="text-lg font-bold tracking-tight">Medical Notes</h3>
+<div class="p-5 bg-surface-light dark:bg-white/5 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<p class="text-sm font-semibold mb-1">Known Allergies</p>
+<p class="text-sm text-[#616161] dark:text-zinc-400 leading-relaxed">No allergies listed. Please consult your physician before emergency donation.</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-border-light dark:border-white/5 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">medical_services</span>
+<div>
+<p class="text-sm font-semibold mb-1">Conditions</p>
+<p class="text-sm text-[#616161] dark:text-zinc-400 leading-relaxed">No chronic health conditions reported.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Account Actions -->
+<section class="space-y-4 pt-4">
+<button class="w-full py-4 rounded-xl font-bold flex items-center justify-between px-6 bg-surface-light dark:bg-white/5 border border-border-light dark:border-white/5">
+<span class="flex items-center gap-3"><span class="material-symbols-outlined text-zinc-500">shield</span> Privacy Policy</span>
+<span class="material-symbols-outlined text-zinc-400">chevron_right</span>
+</button>
+<button class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg ios-shadow hover:bg-primary-dark transition-colors active:scale-[0.98] duration-150">
+                    Logout
+                </button>
+<p class="text-center text-zinc-400 text-xs font-medium uppercase tracking-[0.2em] pb-6">Raktsanchar v2.4.0</p>
+</section>
+</main>
+<!-- Bottom Tab Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-border-light dark:border-white/5 px-8 py-3 flex items-center justify-between z-50">
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Find</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<div class="bg-zinc-100 dark:bg-white/10 p-2 rounded-full -mt-6 ios-shadow border-4 border-white dark:border-background-dark">
+<span class="material-symbols-outlined text-primary">bloodtype</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tight">Request</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Activity</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined fill-[1]">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tight">Profile</span>
+</div>
+</nav>
+</div>
+</body></html>

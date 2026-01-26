@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raktsanchar - Live Blood Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b01717",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1a1a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pulse-red {
+            box-shadow: 0 0 0 0 rgba(176, 23, 23, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(176, 23, 23, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(176, 23, 23, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(176, 23, 23, 0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#000000] dark:text-white">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Top App Bar / Status -->
+<div class="absolute top-0 left-0 right-0 z-20 px-4 pt-12 pb-4 bg-gradient-to-b from-white/90 to-transparent dark:from-background-dark/90 pointer-events-none">
+<div class="flex items-center justify-between pointer-events-auto">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-800 shadow-lg text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-2 bg-white dark:bg-zinc-800 px-4 py-1.5 rounded-full shadow-md border border-zinc-100 dark:border-zinc-700">
+<div class="w-2 h-2 rounded-full bg-primary pulse-red"></div>
+<span class="text-xs font-bold uppercase tracking-widest text-[#000000] dark:text-white">Live Tracking</span>
+</div>
+</div>
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-800 shadow-lg text-[#000000] dark:text-white">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+<!-- Full Screen Map -->
+<div class="absolute inset-0 z-0">
+<div class="h-full w-full bg-[#f0f0f0] dark:bg-zinc-900" data-alt="High contrast city map with a bold red route line indicating blood delivery path." data-location="Mumbai City Hospital Route" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwod_l0DboBL86LzVFMBIIEE1UzuiHOgGpxhG6WVWWwa777GftwJ4nHvk_NaaNCyxG4bXOne9XU0k6GW3KC3_gFR3YvW_g87j_jrJWU83qoPtqu-9ewIiNLxClbFHvJKKmjQipH-_jKbuZtU1TWXaToYv096UnCb8Js8qXERu3Mv1BmO8GQ04A661DL4GC7tD2KYQ5ZM3eAl04CC4FJqtv4wXgyAzHZkG-0NESztCG2_VHFzOwGJRk_n_jXrE7B7gsPgPH4zhC4B-L"); background-size: cover; background-position: center;'>
+<!-- Simulated Rider Marker -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="bg-primary p-2 rounded-full shadow-xl border-2 border-white">
+<span class="material-symbols-outlined text-white text-xl">directions_bike</span>
+</div>
+<div class="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Arjun (Rider)</div>
+</div>
+</div>
+<!-- Destination Marker -->
+<div class="absolute top-[30%] left-[40%]">
+<div class="flex flex-col items-center">
+<div class="bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-lg border-2 border-primary">
+<span class="material-symbols-outlined text-primary text-xl">local_hospital</span>
+</div>
+<div class="bg-white dark:bg-zinc-800 mt-1 px-2 py-0.5 rounded shadow text-[10px] font-bold">CITY HOSPITAL</div>
+</div>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
+<button class="flex h-12 w-12 items-center justify-center rounded-xl bg-white dark:bg-zinc-800 shadow-lg border border-zinc-100 dark:border-zinc-700">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="flex h-12 w-12 items-center justify-center rounded-xl bg-white dark:bg-zinc-800 shadow-lg border border-zinc-100 dark:border-zinc-700">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-lg mt-4">
+<span class="material-symbols-outlined text-white">my_location</span>
+</button>
+</div>
+</div>
+<!-- Persistent Bottom Sheet -->
+<div class="mt-auto relative z-30 flex flex-col items-stretch">
+<!-- Bottom Sheet Handle/Grip -->
+<div class="flex h-6 w-full items-center justify-center bg-white dark:bg-zinc-900 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+<div class="h-1.5 w-12 rounded-full bg-zinc-200 dark:bg-zinc-700"></div>
+</div>
+<div class="bg-white dark:bg-zinc-900 px-6 pb-10 flex flex-col gap-6">
+<!-- Urgent ETA & Progress Header -->
+<div class="flex items-end justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Arriving In</span>
+<div class="flex items-baseline gap-1">
+<span class="text-5xl font-bold text-primary tabular-nums">08</span>
+<span class="text-xl font-bold text-[#000000] dark:text-white uppercase">Mins</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5 bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-sm font-bold">thermostat</span>
+<span class="text-sm font-bold">4.2°C STABLE</span>
+</div>
+<p class="text-[10px] text-zinc-400 mt-1 uppercase font-medium">Next: City Hospital Main Gate</p>
+</div>
+</div>
+<!-- Delivery Progress Line -->
+<div class="flex items-center gap-2">
+<div class="flex-1 flex flex-col gap-1.5">
+<div class="flex justify-between text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">
+<span class="text-primary">Dispatched</span>
+<span class="text-[#000000] dark:text-white">In Transit</span>
+<span>Hospital</span>
+</div>
+<div class="h-1.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
+<div class="h-full bg-primary rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+</div>
+<!-- Rider and Blood Info -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Rider Profile" class="h-14 w-14 rounded-full object-cover border-2 border-white dark:border-zinc-700 shadow-md" data-alt="Portrait of a smiling male courier in a professional uniform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Zksoyk6sQdyJdPBWGDPi21YwJ93TpcXZV9P7gFIm5fg3ugABgagBtau1YheG4ujkBPnaq3CI9S1dnV52hPRd_TCz7YIsjIO3d3KHvc2Rx9JLmV60VAzvs7J8r70qetzmcnHQeanBrDZFnvt2MC5l_59BVsppTUdk1hcQMcX9V94ze6hK-Y4jDn4NH7aljMdKcitVav0M26yEgQ6LSrVVCpbcKfxb56p6-ebcFJ9jcAha5j01r8V4nSyVClWSS-7BguZogN5P7fIx"/>
+<div class="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full p-0.5 border-2 border-white dark:border-zinc-900">
+<span class="material-symbols-outlined text-[10px] font-bold">verified</span>
+</div>
+</div>
+<div class="flex flex-col">
+<h3 class="text-lg font-bold leading-none text-[#000000] dark:text-white">Arjun Kumar</h3>
+<p class="text-sm text-zinc-500 font-medium">Medical Rapid Response</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-xs text-yellow-500">star</span>
+<span class="text-xs font-bold">4.9</span>
+<span class="text-zinc-300 mx-1">|</span>
+<span class="text-xs text-zinc-500 font-medium">DL 4S CM 9921</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center bg-zinc-50 dark:bg-zinc-800 p-2 rounded-xl border border-zinc-100 dark:border-zinc-700 min-w-[70px]">
+<span class="text-[10px] font-bold text-zinc-400 uppercase">Unit</span>
+<span class="text-xl font-bold text-primary tracking-tighter">O-VE</span>
+<span class="text-[8px] font-bold bg-white dark:bg-zinc-700 px-1 rounded shadow-sm text-zinc-500 mt-1">#RS-992</span>
+</div>
+</div>
+<!-- Action Hub -->
+<div class="flex gap-3">
+<button class="flex-1 flex items-center justify-center gap-2 bg-primary text-white h-14 rounded-2xl font-bold text-base shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">call</span>
+                        Call Arjun
+                    </button>
+<button class="flex h-14 w-14 items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-zinc-700 dark:text-zinc-300">chat_bubble</span>
+</button>
+<button class="flex h-14 w-14 items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-zinc-700 dark:text-zinc-300">warning</span>
+</button>
+</div>
+<!-- Safety Note -->
+<div class="flex items-center gap-3 p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl">
+<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600">
+<span class="material-symbols-outlined text-sm">health_and_safety</span>
+</div>
+<p class="text-[11px] text-zinc-500 leading-tight font-medium">
+                        Rider is following <span class="font-bold text-zinc-700 dark:text-zinc-300">Clinical Protocol CP-12</span>. Blood unit is secured in an ISO-certified thermal container.
+                    </p>
+</div>
+</div>
+<!-- iOS Home Indicator Safe Area -->
+<div class="h-8 bg-white dark:bg-zinc-900"></div>
+</div>
+</div>
+</body></html>

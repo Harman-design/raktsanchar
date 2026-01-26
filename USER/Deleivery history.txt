@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Raktsanchar - Request History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#de2012",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221210",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="max-w-[430px] mx-auto bg-background-light dark:bg-background-dark min-h-screen relative shadow-2xl">
+<!-- TopAppBar: iOS Inspired -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-white/10">
+<div class="flex items-center px-4 py-4 justify-between">
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#181111] dark:text-white">arrow_back_ios_new</span>
+</button>
+<h1 class="text-[#181111] dark:text-white text-xl font-bold leading-tight tracking-tight">Request History</h1>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#181111] dark:text-white">search</span>
+</button>
+</div>
+<!-- Chips: Filters -->
+<div class="flex gap-2 px-4 pb-4 overflow-x-auto hide-scrollbar">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-5 text-white shadow-lg shadow-primary/20">
+<p class="text-sm font-semibold">All</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5 transition-all active:scale-95">
+<p class="text-[#181111] dark:text-gray-200 text-sm font-medium">This Month</p>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5 transition-all active:scale-95">
+<p class="text-[#181111] dark:text-gray-200 text-sm font-medium">Last 3 Months</p>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-5 transition-all active:scale-95">
+<p class="text-[#181111] dark:text-gray-200 text-sm font-medium">Custom</p>
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+</button>
+</div>
+</header>
+<main class="px-4 py-4 space-y-4">
+<!-- Card 1: Delivered (Success State) -->
+<div class="@container">
+<div class="flex flex-col items-stretch justify-start rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-white/5 border border-white dark:border-white/5">
+<div class="flex p-4 gap-4">
+<div class="size-16 shrink-0 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-3xl">check_circle</span>
+</div>
+<div class="flex flex-col justify-center grow">
+<div class="flex justify-between items-start">
+<span class="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Delivered</span>
+<p class="text-[#896461] dark:text-gray-400 text-[11px] font-medium">#RS-88291</p>
+</div>
+<h3 class="text-[#181111] dark:text-white text-lg font-extrabold leading-tight mt-1">O Positive Blood Request</h3>
+</div>
+</div>
+<div class="px-4 pb-4 border-b border-gray-50 dark:border-white/5">
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm mb-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="truncate">City Hospital, ICU Wing</span>
+</div>
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>24 Oct, 02:30 PM</span>
+</div>
+</div>
+<div class="p-3 bg-gray-50/50 dark:bg-white/5 flex justify-end">
+<button class="flex items-center gap-2 cursor-pointer rounded-lg h-9 px-4 bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-sm">description</span>
+<span>Download Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Processing (Active State) -->
+<div class="@container">
+<div class="flex flex-col items-stretch justify-start rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-white/5 border border-white dark:border-white/5">
+<div class="flex p-4 gap-4">
+<div class="size-16 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl animate-pulse">local_hospital</span>
+</div>
+<div class="flex flex-col justify-center grow">
+<div class="flex justify-between items-start">
+<span class="bg-primary/10 text-primary dark:bg-primary/20 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">In Transit</span>
+<p class="text-[#896461] dark:text-gray-400 text-[11px] font-medium">#RS-87552</p>
+</div>
+<h3 class="text-[#181111] dark:text-white text-lg font-extrabold leading-tight mt-1">A Negative Blood Request</h3>
+</div>
+</div>
+<div class="px-4 pb-4 border-b border-gray-50 dark:border-white/5">
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm mb-1">
+<span class="material-symbols-outlined text-sm text-primary">distance</span>
+<span class="truncate">Apollo Medical Center (1.2km away)</span>
+</div>
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Today, 11:15 AM</span>
+</div>
+</div>
+<div class="p-3 bg-primary/5 flex justify-between items-center">
+<span class="text-xs text-primary font-medium px-2">Courier is 5 mins away</span>
+<button class="flex items-center gap-2 cursor-pointer rounded-lg h-9 px-4 bg-primary text-white text-sm font-semibold">
+<span>Track Live</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3: Cancelled (Error State) -->
+<div class="@container">
+<div class="flex flex-col items-stretch justify-start rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-white/5 border border-white dark:border-white/5 opacity-80">
+<div class="flex p-4 gap-4">
+<div class="size-16 shrink-0 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined text-3xl">cancel</span>
+</div>
+<div class="flex flex-col justify-center grow">
+<div class="flex justify-between items-start">
+<span class="bg-gray-200 text-gray-600 dark:bg-white/10 dark:text-gray-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Cancelled</span>
+<p class="text-[#896461] dark:text-gray-400 text-[11px] font-medium">#RS-86441</p>
+</div>
+<h3 class="text-[#181111] dark:text-white text-lg font-extrabold leading-tight mt-1">B Positive Blood Request</h3>
+</div>
+</div>
+<div class="px-4 pb-4">
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm mb-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="truncate">St. Jude Emergency</span>
+</div>
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm">
+<span class="material-symbols-outlined text-sm">info</span>
+<span class="italic text-xs">Reason: Hospital updated inventory</span>
+</div>
+</div>
+<div class="p-3 bg-gray-50/50 dark:bg-white/5 flex justify-end">
+<button class="flex items-center gap-2 cursor-not-allowed rounded-lg h-9 px-4 bg-gray-200 dark:bg-white/10 text-gray-400 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">description</span>
+<span>No Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4: Delivered (Previous) -->
+<div class="@container">
+<div class="flex flex-col items-stretch justify-start rounded-xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-white/5 border border-white dark:border-white/5">
+<div class="flex p-4 gap-4">
+<div class="size-16 shrink-0 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-3xl">check_circle</span>
+</div>
+<div class="flex flex-col justify-center grow">
+<div class="flex justify-between items-start">
+<span class="bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Delivered</span>
+<p class="text-[#896461] dark:text-gray-400 text-[11px] font-medium">#RS-85110</p>
+</div>
+<h3 class="text-[#181111] dark:text-white text-lg font-extrabold leading-tight mt-1">AB Negative Blood Request</h3>
+</div>
+</div>
+<div class="px-4 pb-4 border-b border-gray-50 dark:border-white/5">
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm mb-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="truncate">LifeCare General Clinic</span>
+</div>
+<div class="flex items-center gap-2 text-[#896461] dark:text-gray-400 text-sm">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>15 Sep, 09:15 AM</span>
+</div>
+</div>
+<div class="p-3 bg-gray-50/50 dark:bg-white/5 flex justify-end">
+<button class="flex items-center gap-2 cursor-pointer rounded-lg h-9 px-4 bg-primary text-white text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">description</span>
+<span>Download Report</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Tab Bar (Context Placeholder) -->
+<nav class="fixed bottom-0 w-[430px] bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-100 dark:border-white/10 px-6 py-4 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">history</span>
+<span class="text-[10px] font-bold">History</span>
+</button>
+<button class="size-14 -mt-10 bg-primary rounded-full flex items-center justify-center shadow-xl shadow-primary/40 text-white">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">notifications</span>
+<span class="text-[10px] font-medium">Alerts</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</nav>
+<!-- Space for bottom nav -->
+<div class="h-24"></div>
+</div>
+</body></html>

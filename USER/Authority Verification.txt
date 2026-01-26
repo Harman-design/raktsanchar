@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Authority Verification - Raktsanchar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d5973",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111d21",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 20px -2px rgba(13, 89, 115, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111618] dark:text-white transition-colors duration-300">
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 ios-blur border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-3">
+<button class="flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Authority Verification</h2>
+</div>
+<button class="flex size-10 items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">info</span>
+</button>
+</div>
+</nav>
+<main class="max-w-md mx-auto pb-24">
+<!-- Trust Status Summary -->
+<div class="p-4">
+<div class="relative overflow-hidden rounded-xl bg-primary p-6 text-white custom-shadow">
+<div class="relative z-10 flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] fill-current">verified_user</span>
+<p class="text-xs font-bold tracking-[0.1em] uppercase opacity-80">Network Status</p>
+</div>
+<p class="text-2xl font-extrabold leading-tight">Fully Verified &amp; Compliant</p>
+<p class="text-sm opacity-90 leading-relaxed max-w-[85%] mt-1">
+                        Raktsanchar adheres to all national blood safety protocols and international logistics standards.
+                    </p>
+</div>
+<!-- Abstract Design Element -->
+<div class="absolute -right-8 -bottom-8 size-40 rounded-full bg-white/10 blur-3xl"></div>
+<div class="absolute right-4 top-4">
+<span class="material-symbols-outlined text-[64px] opacity-20">shield_with_heart</span>
+</div>
+</div>
+</div>
+<!-- Section: Government Approvals -->
+<div class="mt-2">
+<h2 class="text-xl font-bold px-4 mb-4 flex items-center gap-2">
+                Government Approvals
+                <span class="h-px flex-1 bg-gray-200 dark:bg-gray-800"></span>
+</h2>
+<div class="space-y-3 px-4">
+<!-- DCGI Card -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary shrink-0 size-14">
+<span class="material-symbols-outlined text-[32px]">account_balance</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-base font-bold leading-none mb-1">DCGI Licensed</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium">Drug Controller General of India</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-[10px] font-bold text-green-600 dark:text-green-400 tracking-wider uppercase">Active License</span>
+</div>
+</div>
+<button class="text-primary">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</button>
+</div>
+<!-- SBTC Card -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary shrink-0 size-14">
+<span class="material-symbols-outlined text-[32px]">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-base font-bold leading-none mb-1">State Blood Council</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium">License No: SBTC/RK/2023/882</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-[10px] font-bold text-green-600 dark:text-green-400 tracking-wider uppercase">Verified</span>
+</div>
+</div>
+<button class="text-primary">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Section: Testing Standards -->
+<div class="mt-8">
+<h2 class="text-xl font-bold px-4 mb-4 flex items-center gap-2">
+                Testing Protocols
+                <span class="h-px flex-1 bg-gray-200 dark:bg-gray-800"></span>
+</h2>
+<div class="px-4">
+<div class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="p-4 bg-primary/5 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+<span class="text-xs font-bold text-primary tracking-widest uppercase">Mandatory Screening</span>
+<span class="material-symbols-outlined text-primary text-[20px]">biotech</span>
+</div>
+<div class="divide-y divide-gray-50 dark:divide-gray-800">
+<div class="p-4 flex items-start gap-4">
+<span class="material-symbols-outlined text-green-500 mt-0.5">check_circle</span>
+<div>
+<p class="font-bold text-sm">NAT (Nucleic Acid Testing)</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Highest sensitivity for early viral detection including HIV, HBV, and HCV.</p>
+</div>
+</div>
+<div class="p-4 flex items-start gap-4">
+<span class="material-symbols-outlined text-green-500 mt-0.5">check_circle</span>
+<div>
+<p class="font-bold text-sm">ELISA 4th Gen Testing</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Standardized antibody and antigen screening for all units.</p>
+</div>
+</div>
+<div class="p-4 flex items-start gap-4">
+<span class="material-symbols-outlined text-green-500 mt-0.5">check_circle</span>
+<div>
+<p class="font-bold text-sm">Cold Chain Integrity</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time IoT temperature monitoring maintained between 2°C to 6°C.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Logistics & International -->
+<div class="mt-8">
+<div class="px-4 flex gap-4 overflow-x-auto no-scrollbar pb-4">
+<div class="flex-none w-48 bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="size-10 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">public</span>
+</div>
+<p class="font-bold text-sm mb-1">WHO Compliant</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Blood Logistics Standards</p>
+</div>
+<div class="flex-none w-48 bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="size-10 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">workspace_premium</span>
+</div>
+<p class="font-bold text-sm mb-1">ISO 9001:2015</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Quality Mgmt System</p>
+</div>
+<div class="flex-none w-48 bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="size-10 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<p class="font-bold text-sm mb-1">NACO Partner</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-tighter">Verified Transfusion</p>
+</div>
+</div>
+</div>
+<!-- Trust Footer -->
+<footer class="mt-8 px-4 text-center">
+<div class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-dashed border-gray-200 dark:border-gray-800">
+<p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed italic">
+                    "Raktsanchar acts as a specialized logistics bridge between licensed blood banks and emergency patients. We do not manufacture blood products, only facilitate verified transfers."
+                </p>
+<div class="mt-4 flex justify-center gap-6 opacity-30 grayscale hover:grayscale-0 transition-all">
+<span class="material-symbols-outlined text-[32px]">health_and_safety</span>
+<span class="material-symbols-outlined text-[32px]">security</span>
+<span class="material-symbols-outlined text-[32px]">gavel</span>
+</div>
+</div>
+<div class="mt-8 mb-12">
+<button class="w-full h-14 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 custom-shadow">
+<span class="material-symbols-outlined">download</span>
+                    Download Compliance Report
+                </button>
+</div>
+</footer>
+</main>
+<!-- Bottom Navigation Mock (iOS Style) -->
+<div class="fixed bottom-0 inset-x-0 h-20 bg-white/90 dark:bg-background-dark/90 ios-blur border-t border-gray-100 dark:border-gray-800 flex items-center justify-around px-6 pb-4">
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined text-[26px]">home</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined text-[26px]">search</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined text-[26px] fill-current">verified</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined text-[26px]">person</span>
+</div>
+</div>
+</body></html>
