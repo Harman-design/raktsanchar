@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'core/app_colors.dart';
 import 'rider/screens/home/home_screen.dart';
 import 'rider/screens/auth/login_screen.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  await Supabase.initialize(
+    url: 'https://ynncpmsafoijhvfqzkgp.supabase.co',
+    anonKey: 'sb_publishable_Su1LMFzGXNx2_fOUUj9J7g_y4WzongA',
+  );
+
   runApp(const RaktsancharRiderApp());
 }
 
@@ -13,6 +21,8 @@ class RaktsancharRiderApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final session = Supabase.instance.client.auth.currentSession;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rider App',
@@ -31,7 +41,9 @@ class RaktsancharRiderApp extends StatelessWidget {
           ),
         ),
       ),
-      home:  LoginScreen(), // Rider entry screen
+
+      // 🔐 Auto login
+      home: session != null ? const HomeScreen() : const LoginScreen(),
     );
   }
 }
