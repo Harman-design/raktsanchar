@@ -52,10 +52,11 @@ class _UserOtpPageState extends State<UserOtpPage> {
       }, onConflict: 'user_id');
 
       Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/user/dashboard',
-        (route) => false,
-      );
+  context,
+  '/user/sos',
+  (route) => false,
+);
+
 
       _showMessage("OTP verified successfully ✅");
     } on AuthException catch (e) {

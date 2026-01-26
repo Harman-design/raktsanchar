@@ -1,3 +1,4 @@
+import 'screens/userapplicationfirstpage.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -27,9 +28,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const UserAuthGate(),
       routes: {
-        '/user/login': (_) => const UserLoginPage(),
-        '/user/dashboard': (_) => const UserDashboard(),
-      },
+  '/user/login': (_) => const UserLoginPage(),
+  '/user/dashboard': (_) => const UserDashboard(),
+  '/user/sos': (_) => const EmergencySOSPage(), 
+},
     );
   }
 }
