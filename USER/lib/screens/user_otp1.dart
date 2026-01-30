@@ -46,10 +46,12 @@ class _UserOtpPageState extends State<UserOtpPage> {
       final user = supabase.auth.currentUser;
       if (user == null) throw Exception("User not found");
 
-      await supabase.from('users').upsert({
-        'user_id': user.id,
-        'is_active': true,
-      }, onConflict: 'user_id');
+      await supabase.from('profiles').upsert({
+  'id': user.id,              // MUST be id, not user_id
+  'phone': widget.phone,
+  'role': 'user',
+}, onConflict: 'id');
+
 
       Navigator.pushNamedAndRemoveUntil(
   context,
