@@ -1,6 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../otp_page.dart';
+import 'otp_page.dart';
+
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,17 +35,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await Supabase.instance.client.auth.signInWithOtp(phone: phone);
-
       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => OtpPage(
-            phone: phone,
-            fullName: nameController.text.trim(),
-            vehicleType: selectedVehicle,
-          ),
-        ),
-      );
+  context,
+  MaterialPageRoute(
+    builder: (_) => OtpPage(
+      phone: phone, // the same phone you used for OTP
+    ),
+  ),
+);
+
     } catch (e) {
       _showSnack("Failed to send OTP");
     }

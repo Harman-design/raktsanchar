@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 🔹 HEADER
+              // HEADER
               Row(
                 children: [
                   const CircleAvatar(radius: 24),
@@ -22,11 +22,15 @@ class HomeScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      Text("Good Morning, Rahul",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      Text("ID: #RAK-8821",
-                          style: TextStyle(color: Colors.grey)),
+                      Text(
+                        "Good Morning, Rahul",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "ID: #RAK-8821",
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ],
                   ),
                   const Spacer(),
@@ -36,7 +40,7 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // 🔹 ONLINE TOGGLE
+              // ONLINE STATUS
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -49,24 +53,28 @@ class HomeScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
-                        Text("You are currently Online",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text("Ready to receive critical requests",
-                            style: TextStyle(color: Colors.grey)),
+                        Text(
+                          "You are currently Online",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "Ready to receive critical requests",
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ],
                     ),
                     Switch(
                       value: true,
                       activeColor: Colors.green,
                       onChanged: (_) {},
-                    )
+                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 16),
 
-              // 🔹 STATS
+              // STATS
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -78,23 +86,25 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // 🔹 NEW REQUEST
+              // NEW REQUEST HEADER
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("New Requests",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(
+                    "New Requests",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                   Chip(
                     label: Text("URGENT"),
                     backgroundColor: Color(0xFFFFE5E5),
-                  )
+                  ),
                 ],
               ),
 
               const SizedBox(height: 12),
 
-              // 🔹 REQUEST CARD
+              // REQUEST CARD
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -105,44 +115,51 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("CRITICAL • 15 MINS AWAY",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold)),
+                    const Text(
+                      "CRITICAL • 15 MINS AWAY",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: 8),
-                    const Text("O+ Blood • 2 Units",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text(
+                      "O+ Blood • 2 Units",
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: 12),
                     const Text("Pickup • City Hospital Blood Bank"),
                     const Text("Drop • Apollo Emergency Ward"),
                     const SizedBox(height: 16),
+
                     Row(
                       children: [
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () {},
-                            child: const Text("Decline",
-                                style: TextStyle(color: Colors.red)),
+                            child: const Text(
+                              "Decline",
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green),
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => NewRequestScreen()),
+                                  builder: (_) =>
+                                      const NewRequestScreen(),
+                                ),
                               );
                             },
                             child: const Text("Accept"),
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -165,11 +182,15 @@ class HomeScreen extends StatelessWidget {
         children: [
           Text(title, style: const TextStyle(fontSize: 12)),
           const SizedBox(height: 8),
-          Text(value,
-              style:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text(subtitle,
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          Text(
+            value,
+            style: const TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            subtitle,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
         ],
       ),
     );

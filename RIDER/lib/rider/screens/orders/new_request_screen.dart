@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pickup_screen.dart';
 
 class NewRequestScreen extends StatelessWidget {
   const NewRequestScreen({super.key});
@@ -20,6 +21,7 @@ class NewRequestScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,17 +30,17 @@ class NewRequestScreen extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(
-  'assets/map.png',
-  height: 220,
-  width: double.infinity,
-  fit: BoxFit.cover,
-),
+                  'assets/map.png',
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
                 Positioned(
                   right: 16,
                   bottom: 16,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -57,8 +59,8 @@ class NewRequestScreen extends StatelessWidget {
                   // 🔴 TITLE
                   const Text(
                     "O+ Whole Blood",
-                    style: TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   const Text(
@@ -71,11 +73,11 @@ class NewRequestScreen extends StatelessWidget {
                   // 🔖 BADGES
                   Row(
                     children: [
-                      badge("URGENT REQUEST", Colors.red.shade50,
-                          Colors.red),
+                      badge("URGENT REQUEST",
+                          Colors.red.shade50, Colors.red),
                       const SizedBox(width: 8),
-                      badge("COLD CHAIN", Colors.blue.shade50,
-                          Colors.blue),
+                      badge("COLD CHAIN",
+                          Colors.blue.shade50, Colors.blue),
                     ],
                   ),
 
@@ -153,30 +155,56 @@ class NewRequestScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
+            // 🟢 PROCEED TO PICKUP
             Expanded(
               child: OutlinedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  "Reject",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PickupScreen(),
+                    ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                child: const Text("Proceed to Pickup"),
+              ),
+            ),
+
+            const SizedBox(width: 12),
+
+            // 🔴 ACCEPT ORDER
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PickupScreen(),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Accept Order →",
                   style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -189,7 +217,8 @@ class NewRequestScreen extends StatelessWidget {
   // 🔹 HELPERS
   static Widget badge(String text, Color bg, Color fg) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding:
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(20),
@@ -212,11 +241,14 @@ class NewRequestScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(color: Colors.grey)),
+            Text(title,
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 6),
-            Text(value,
-                style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              value,
+              style: const TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
@@ -242,17 +274,26 @@ class NewRequestScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(title,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold)),
-                    Text(distance,
-                        style: const TextStyle(color: Colors.grey)),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      distance,
+                      style:
+                          const TextStyle(color: Colors.grey),
+                    ),
                   ],
                 ),
-                Text(subtitle,
-                    style: const TextStyle(color: Colors.grey)),
+                Text(
+                  subtitle,
+                  style:
+                      const TextStyle(color: Colors.grey),
+                ),
               ],
             ),
           ),
