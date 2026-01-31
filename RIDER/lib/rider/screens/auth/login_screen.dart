@@ -1,10 +1,7 @@
-
+// login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'otp_page.dart';
-
-
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,28 +21,30 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
 
   // ================================
-  // Supabase OTP Login
+  // Send OTP
   // ================================
   Future<void> sendOtp() async {
-    final phone = "+91${mobileController.text.trim()}";
-
     if (!_validateInput()) return;
 
+    final phone = "+91${mobileController.text.trim()}";
     setState(() => loading = true);
 
     try {
       await Supabase.instance.client.auth.signInWithOtp(phone: phone);
-      Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => OtpPage(
-      phone: phone, // the same phone you used for OTP
-    ),
-  ),
-);
 
+      // 👉 Pass name & vehicle to OTP page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OtpPage(
+            phone: phone,
+            name: nameController.text.trim(),
+            selectedVehicle: selectedVehicle,
+          ),
+        ),
+      );
     } catch (e) {
-      _showSnack("Failed to send OTP");
+      _showSnack("Failed to send OTP. Try again.");
     }
 
     setState(() => loading = false);
@@ -60,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return false;
     }
 
-    if (mobileController.text.length != 10) {
+    if (mobileController.text.trim().length != 10) {
       _showSnack("Enter valid 10-digit mobile number");
       return false;
     }
@@ -69,9 +68,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showSnack(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg)),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(msg)));
   }
 
   // ================================
@@ -122,8 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
             top: 16,
             right: 16,
             child: Chip(
-              label: Text("PARTNER APP",
-                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+              label: Text(
+                "PARTNER APP",
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
               backgroundColor: Colors.white,
             ),
           ),
@@ -210,8 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-          child: Text("We'll send an OTP for verification.",
-              style: TextStyle(fontSize: 12, color: Colors.grey)),
+          child: Text(
+            "We'll send an OTP for verification.",
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
         ),
       ],
     );
@@ -226,15 +229,16 @@ class _LoginScreenState extends State<LoginScreen> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           onPressed: loading ? null : sendOtp,
           child: loading
               ? const CircularProgressIndicator(color: Colors.white)
-              : const Text("Verify & Proceed →",
-                  style: TextStyle(fontSize: 16, color: Colors.white)),
+              : const Text(
+                  "Verify & Proceed →",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
         ),
       ),
     );

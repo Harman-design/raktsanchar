@@ -1,11 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'pickup_screen.dart';
 
-class NewRequestScreen extends StatelessWidget {
-  const NewRequestScreen({super.key});
+class NewRequestScreen extends StatefulWidget {
+  final String orderId;
+
+  const NewRequestScreen({
+    super.key,
+    required this.orderId,
+  });
+
+  @override
+  State<NewRequestScreen> createState() => _NewRequestScreenState();
+}
+
+class _NewRequestScreenState extends State<NewRequestScreen> {
+  final supabase = Supabase.instance.client;
+
+  bool loading = true;
+  Map<String, dynamic>? order;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadOrder();
+  }
+
+  // ================================
+  // LOAD ORDER FROM SUPABASE
+  // ================================
+  Future<void> _loadOrder() async {
+    final data = await supabase
+        .from('orders')
+        .select(
+          '''
+          id,
+          requested_type,
+          units_requested,
+          status,
+          hospitals(name, address),
+          blood_banks(name, address)
+          ''',
+        )
+        .eq('id', widget.orderId)
+        .single();
+
+    setState(() {
+      order = data;
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7F6),
       appBar: AppBar(
@@ -21,237 +74,174 @@ class NewRequestScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+      body: _body(),
+      bottomNavigationBar: _bottomBar(),
+    );
+  }
 
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 🗺️ MAP IMAGE
-            Stack(
-              children: [
-                Image.asset(
-                  'assets/map.png',
-                  height: 220,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  right: 16,
-                  bottom: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text("ID: #REQ-8922"),
-                  ),
-                ),
-              ],
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 🔴 TITLE
-                  const Text(
-                    "O+ Whole Blood",
-                    style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    "2 Units • Standard Pack",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // 🔖 BADGES
-                  Row(
-                    children: [
-                      badge("URGENT REQUEST",
-                          Colors.red.shade50, Colors.red),
-                      const SizedBox(width: 8),
-                      badge("COLD CHAIN",
-                          Colors.blue.shade50, Colors.blue),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // 💰 PAY + TIME
-                  Row(
-                    children: [
-                      infoCard("EST. PAY", "₹150"),
-                      const SizedBox(width: 12),
-                      infoCard("EST. TIME", "25 min"),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // 📍 ROUTE DETAILS
-                  const Text(
-                    "ROUTE DETAILS",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.grey),
-                  ),
-                  const SizedBox(height: 12),
-
-                  routeTile(
-                    icon: Icons.circle,
-                    iconColor: Colors.green,
-                    title: "City General Hospital",
-                    subtitle: "42 Green Avenue, Block C",
-                    distance: "2.5 km",
-                  ),
-
-                  routeTile(
-                    icon: Icons.location_on,
-                    iconColor: Colors.red,
-                    title: "St. Mary's Trauma Center",
-                    subtitle: "88 Health Park Road",
-                    distance: "5.0 km",
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // ⚠️ NOTE
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF3CD),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Text(
-                      "Handover directly to ER reception. Do not leave at front desk.",
-                      style: TextStyle(color: Colors.brown),
-                    ),
-                  ),
-
-                  const SizedBox(height: 80),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-
-      // 🔴 BOTTOM BUTTONS
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 8,
-              color: Colors.black12,
-            )
-          ],
-        ),
-        child: Row(
-          children: [
-            // 🟢 PROCEED TO PICKUP
-            Expanded(
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const PickupScreen(),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text("Proceed to Pickup"),
-              ),
-            ),
-
-            const SizedBox(width: 12),
-
-            // 🔴 ACCEPT ORDER
-            Expanded(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const PickupScreen(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Accept Order →",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+  // ================================
+  // BODY
+  // ================================
+  Widget _body() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _mapSection(),
+          _contentSection(),
+        ],
       ),
     );
   }
 
-  // 🔹 HELPERS
+  Widget _mapSection() {
+    return Stack(
+      children: [
+        Image.asset(
+          'assets/map.png',
+          height: 220,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+        Positioned(
+          right: 16,
+          bottom: 16,
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text("ID: ${order!['id'].toString().substring(0, 8)}"),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _contentSection() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            order!['requested_type'],
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "${order!['units_requested']} Units",
+            style: const TextStyle(color: Colors.grey),
+          ),
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              badge("URGENT REQUEST", Colors.red.shade50, Colors.red),
+              const SizedBox(width: 8),
+              badge("COLD CHAIN", Colors.blue.shade50, Colors.blue),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
+          const Text(
+            "ROUTE DETAILS",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+          ),
+          const SizedBox(height: 12),
+
+          routeTile(
+            icon: Icons.circle,
+            iconColor: Colors.green,
+            title: order!['blood_banks']['name'],
+            subtitle: order!['blood_banks']['address'] ?? '',
+            distance: "Pickup",
+          ),
+
+          routeTile(
+            icon: Icons.location_on,
+            iconColor: Colors.red,
+            title: order!['hospitals']['name'],
+            subtitle: order!['hospitals']['address'] ?? '',
+            distance: "Drop",
+          ),
+
+          const SizedBox(height: 80),
+        ],
+      ),
+    );
+  }
+
+  // ================================
+  // BOTTOM BAR
+  // ================================
+  Widget _bottomBar() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 8,
+            color: Colors.black12,
+          )
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PickupScreen(orderId: widget.orderId),
+                  ),
+                );
+              },
+              child: const Text("Proceed to Pickup"),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PickupScreen(orderId: widget.orderId),
+                  ),
+                );
+              },
+              child: const Text(
+                "Accept Order →",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ================================
+  // HELPERS
+  // ================================
   static Widget badge(String text, Color bg, Color fg) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(
-        text,
-        style: TextStyle(color: fg, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  static Widget infoCard(String title, String value) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title,
-                style: const TextStyle(color: Colors.grey)),
-            const SizedBox(height: 6),
-            Text(
-              value,
-              style: const TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
+      child:
+          Text(text, style: TextStyle(color: fg, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -265,7 +255,6 @@ class NewRequestScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: iconColor, size: 16),
           const SizedBox(width: 12),
@@ -274,26 +263,16 @@ class NewRequestScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      distance,
-                      style:
-                          const TextStyle(color: Colors.grey),
-                    ),
+                    Text(title,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(distance,
+                        style: const TextStyle(color: Colors.grey)),
                   ],
                 ),
-                Text(
-                  subtitle,
-                  style:
-                      const TextStyle(color: Colors.grey),
-                ),
+                Text(subtitle,
+                    style: const TextStyle(color: Colors.grey)),
               ],
             ),
           ),
