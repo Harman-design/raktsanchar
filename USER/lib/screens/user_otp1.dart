@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../main.dart';
+import 'user_dashboard1.dart';
 
 class UserOtpPage extends StatefulWidget {
   final String phone;
@@ -30,41 +31,44 @@ class _UserOtpPageState extends State<UserOtpPage> {
     final otp = _otpController.text.trim();
 
     if (otp.length != 6) {
-      _showMessage("Enter valid 6-digit OTP");
+      _showMessage("Enter a valid 6-digit OTP");
       return;
     }
 
     setState(() => _isLoading = true);
 
     try {
+      // 1️⃣ Verify OTP
       await supabase.auth.verifyOTP(
         phone: widget.phone,
         token: otp,
         type: OtpType.sms,
       );
 
+      // 2️⃣ Get authenticated user
       final user = supabase.auth.currentUser;
-      if (user == null) throw Exception("User not found");
+      if (user == null) {
+        throw Exception("User not found");
+      }
 
+      // 3️⃣ Create / update user profile
       await supabase.from('profiles').upsert({
-  'id': user.id,              // MUST be id, not user_id
-  'phone': widget.phone,
-  'role': 'user',
-}, onConflict: 'id');
+        'id': user.id,
+        'phone': widget.phone,
+        'role': 'user',
+      });
 
+      if (!context.mounted) return;
 
-      Navigator.pushNamedAndRemoveUntil(
-  context,
-  '/user/sos',
-  (route) => false,
-);
-
-
-      _showMessage("OTP verified successfully ✅");
+      // 4️⃣ Navigate to Dashboard (FINAL DESTINATION)
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const DashboardPage()),
+        (route) => false,
+      );
     } on AuthException catch (e) {
       _showMessage(e.message);
     } catch (_) {
-      _showMessage("Login completed, but user setup failed");
+      _showMessage("Login successful, but profile setup failed");
     }
 
     setState(() => _isLoading = false);
@@ -91,6 +95,8 @@ class _UserOtpPageState extends State<UserOtpPage> {
       ),
     );
   }
+
+  // ---------------- UI SECTIONS ----------------
 
   Widget _buildHeader() {
     return Container(
