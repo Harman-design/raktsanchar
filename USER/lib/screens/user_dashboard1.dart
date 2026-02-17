@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'user_profile.dart';
 import 'user_notifications.dart';
+import 'donor_network_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -35,12 +36,13 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       bottomNavigationBar: _bottomNavBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _requestBloodButton(),
     );
   }
 
-  // ------------------ APP BAR ------------------
+  // ---------------- APP BAR ----------------
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
@@ -61,8 +63,9 @@ class _DashboardPageState extends State<DashboardPage> {
             children: const [
               Text(
                 "Raktsanchar",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
               Text(
                 "EMERGENCY NETWORK",
@@ -82,7 +85,8 @@ class _DashboardPageState extends State<DashboardPage> {
           onPressed: () {},
         ),
         IconButton(
-          icon: const Icon(Icons.notifications, color: Colors.grey),
+          icon:
+              const Icon(Icons.notifications, color: Colors.grey),
           onPressed: () {
             Navigator.push(
               context,
@@ -97,7 +101,7 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  // ------------------ EMERGENCY CARD ------------------
+  // ---------------- EMERGENCY CARD ----------------
   Widget _emergencyCard() {
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -109,29 +113,37 @@ class _DashboardPageState extends State<DashboardPage> {
           color: Colors.white,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: primary.withOpacity(.1),
-                  child: Icon(Icons.emergency, color: primary),
+                  backgroundColor:
+                      primary.withOpacity(.1),
+                  child: Icon(Icons.emergency,
+                      color: primary),
                 ),
                 const SizedBox(width: 12),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: const [
                     Text(
                       "Emergency Mode",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight:
+                              FontWeight.bold),
                     ),
                     Text(
                       "Broadcasting Active",
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFFDE2012),
+                        fontWeight:
+                            FontWeight.w600,
+                        color:
+                            Color(0xFFDE2012),
                       ),
                     ),
                   ],
@@ -143,7 +155,8 @@ class _DashboardPageState extends State<DashboardPage> {
               activeColor: Colors.white,
               activeTrackColor: primary,
               onChanged: (v) {
-                setState(() => emergencyOn = v);
+                setState(
+                    () => emergencyOn = v);
               },
             ),
           ],
@@ -152,19 +165,23 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  // ------------------ STATS ------------------
+  // ---------------- STATS ----------------
   Widget _statsSection() {
     return SizedBox(
       height: 120,
       child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+            horizontal: 16),
         scrollDirection: Axis.horizontal,
         children: [
-          _statCard(Icons.local_hospital, "Nearby Banks", "12", "+2",
+          _statCard(Icons.local_hospital,
+              "Nearby Banks", "12", "+2",
               color: Colors.green),
-          _statCard(Icons.opacity, "Live Inventory", "84%", null,
+          _statCard(Icons.opacity,
+              "Live Inventory", "84%", null,
               iconColor: Colors.blue),
-          _statCard(Icons.verified, "Last Tested", "2h", "AGO",
+          _statCard(Icons.verified,
+              "Last Tested", "2h", "AGO",
               iconColor: Colors.orange),
         ],
       ),
@@ -181,38 +198,52 @@ class _DashboardPageState extends State<DashboardPage> {
   }) {
     return Container(
       width: 150,
-      margin: const EdgeInsets.only(right: 12),
+      margin:
+          const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.grey.shade200),
+        borderRadius:
+            BorderRadius.circular(14),
+        border: Border.all(
+            color: Colors.grey.shade200),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor ?? primary),
+          Icon(icon,
+              color: iconColor ?? primary),
           const SizedBox(height: 8),
           Text(title,
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey)),
           const Spacer(),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment:
+                CrossAxisAlignment.end,
             children: [
               Text(
                 value,
-                style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight:
+                        FontWeight.bold),
               ),
               if (extra != null)
                 Padding(
-                  padding: const EdgeInsets.only(left: 6),
+                  padding:
+                      const EdgeInsets.only(
+                          left: 6),
                   child: Text(
                     extra,
                     style: TextStyle(
                       fontSize: 12,
-                      color: color ?? Colors.grey,
-                      fontWeight: FontWeight.bold,
+                      color:
+                          color ?? Colors.grey,
+                      fontWeight:
+                          FontWeight.bold,
                     ),
                   ),
                 )
@@ -223,36 +254,48 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  // ------------------ DELIVERY TRACKER ------------------
+  // ---------------- DELIVERY ----------------
   Widget _deliveryTracker() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding:
+            const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade300),
+          borderRadius:
+              BorderRadius.circular(16),
+          border: Border.all(
+              color: Colors.grey.shade300),
         ),
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.route, color: primary),
-                    const SizedBox(width: 6),
+                    Icon(Icons.route,
+                        color: primary),
+                    const SizedBox(
+                        width: 6),
                     const Text(
                       "Delivery in progress",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight:
+                              FontWeight
+                                  .bold),
                     ),
                   ],
                 ),
                 Text(
                   "#RK-4421",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, color: primary),
+                  style: TextStyle(
+                      fontWeight:
+                          FontWeight.bold,
+                      color: primary),
                 ),
               ],
             ),
@@ -260,24 +303,9 @@ class _DashboardPageState extends State<DashboardPage> {
             LinearProgressIndicator(
               value: 0.66,
               minHeight: 6,
-              backgroundColor: Colors.grey.shade300,
+              backgroundColor:
+                  Colors.grey.shade300,
               color: primary,
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("Requested", style: TextStyle(fontSize: 10)),
-                Text(
-                  "Dispatched",
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xFFDE2012),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text("Arriving", style: TextStyle(fontSize: 10)),
-              ],
             ),
           ],
         ),
@@ -285,8 +313,8 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  // ------------------ BLOOD GRID ------------------
-  Widget _bloodGrid() {
+  // ---------------- BLOOD GRID ----------------
+ Widget _bloodGrid() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: GridView.count(
@@ -305,77 +333,117 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
+
   Widget _sectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+          horizontal: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
         children: [
           Text(title,
-              style:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text(
-            "View Inventory",
-            style: TextStyle(color: primary, fontWeight: FontWeight.bold),
-          ),
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight:
+                      FontWeight.bold)),
+          Text("View Inventory",
+              style: TextStyle(
+                  color: primary,
+                  fontWeight:
+                      FontWeight.bold)),
         ],
       ),
     );
   }
 
-  // ------------------ ACTION BUTTONS ------------------
+  // ---------------- ACTION BUTTONS ----------------
   Widget _actionButtons() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          _ActionButton(Icons.map, "Find Donors"),
-          _ActionButton(Icons.history, "History"),
-          _ActionButton(Icons.volunteer_activism, "Donate"),
-        ],
-      ),
-    );
-  }
+  return Padding(
+    padding: const EdgeInsets.all(16),
+    child: Row(
+      children: [
+        _ActionButton(
+          Icons.map,
+          "Find Donors",
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const DonorNetworkPage(),
+              ),
+            );
+          },
+        ),
+        _ActionButton(
+          Icons.history,
+          "History",
+          onTap: () {},
+        ),
+        _ActionButton(
+          Icons.volunteer_activism,
+          "Donate",
+          onTap: () {},
+        ),
+      ],
+    ),
+  );
+}
 
-  // ------------------ FAB ------------------
+  // ---------------- FAB ----------------
   Widget _requestBloodButton() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 56),
+      padding:
+          const EdgeInsets.only(bottom: 56),
       child: FloatingActionButton.extended(
         backgroundColor: primary,
         onPressed: () {},
-        icon: const Icon(Icons.add_circle),
-        label: const Text("Request Blood Now"),
+        icon: const Icon(
+            Icons.add_circle),
+        label:
+            const Text("Request Blood Now"),
       ),
     );
   }
 
-  // ------------------ BOTTOM NAV ------------------
+  // ---------------- BOTTOM NAV ----------------
   Widget _bottomNavBar() {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
       selectedItemColor: primary,
-      unselectedItemColor: Colors.grey,
+      unselectedItemColor:
+          Colors.grey,
       onTap: (index) {
-        setState(() => _currentIndex = index);
+        setState(
+            () => _currentIndex = index);
         if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const ProfilePage()),
+            MaterialPageRoute(
+                builder: (_) =>
+                    const ProfilePage()),
           );
         }
       },
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.analytics), label: "Data"),
-        BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chat"),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.analytics),
+            label: "Data"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: "Chat"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile"),
       ],
     );
   }
 }
 
-// ------------------ REUSABLE WIDGETS ------------------
+// ---------------- REUSABLE WIDGETS ----------------
 
 class _BloodCard extends StatelessWidget {
   final String title;
@@ -446,35 +514,39 @@ class _BloodCard extends StatelessWidget {
     );
   }
 }
-
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String label;
+  final VoidCallback onTap;
 
-  const _ActionButton(this.icon, this.label);
+  const _ActionButton(this.icon, this.label, {required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade300),
-              borderRadius: BorderRadius.circular(14),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Icon(icon, color: Colors.grey),
             ),
-            child: Icon(icon, color: Colors.grey),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            style:
-                const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-        ],
+            const SizedBox(height: 6),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
