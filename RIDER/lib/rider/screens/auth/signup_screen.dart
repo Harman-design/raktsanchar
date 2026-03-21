@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'otp_page.dart';
-import 'package:raktsanchar/rider/screens/auth/signup_screen.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => loading = true);
 
     try {
-      // 📱 Mobile login
       if (input.length == 10 && RegExp(r'^[0-9]+$').hasMatch(input)) {
         final phone = "+91$input";
 
@@ -43,9 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         );
-      } 
-      // 📧 Email login
-      else {
+      } else {
         await Supabase.instance.client.auth.signInWithOtp(email: input);
         _showSnack("OTP sent to email");
       }
@@ -67,18 +64,16 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
 
       body: SafeArea(
-        child: SingleChildScrollView( // ✅ FIX OVERFLOW
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
 
-                // ✅ LOGO ADDED
                 Image.asset(
-                  'assets/logo.png', // 👉 make sure this exists
+                  'assets/logo.png',
                   height: 80,
                 ),
 
@@ -89,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
 
                 const Text(
                   "Log in to your account to start deliveries",
@@ -99,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 30),
 
-                // INPUT FIELD
                 TextField(
                   controller: inputController,
                   decoration: InputDecoration(
@@ -113,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 20),
 
-                // PASSWORD (UI only)
                 TextField(
                   controller: passwordController,
                   obscureText: true,
@@ -128,7 +121,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 30),
 
-                // LOGIN BUTTON
                 SizedBox(
                   width: double.infinity,
                   height: 55,
@@ -152,30 +144,36 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 20),
 
-                // SIGNUP OPTION
                 Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    const Text("Don’t have an account? "),
-    GestureDetector(
-      onTap: () {
-        print("SIGNUP CLICK WORKING");
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don’t have an account? "),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SignupScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Sign up",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const SignupScreen(),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        );
-      },
-      child: const Text(
-        "Sign up",
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
         ),
       ),
-    ),
-  ],
-)
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'pickup_screen.dart';
+import 'ongoing_delivery_screen.dart';
 
 class NewRequestScreen extends StatefulWidget {
   final String orderId;
@@ -176,7 +176,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
   }
 
   // ================================
-  // BOTTOM BAR
+  // BOTTOM BAR (FIXED)
   // ================================
   Widget _bottomBar() {
     return Container(
@@ -198,7 +198,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PickupScreen(orderId: widget.orderId),
+                    builder: (_) => OngoingDeliveryPage(),
                   ),
                 );
               },
@@ -215,7 +215,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PickupScreen(orderId: widget.orderId),
+                    builder: (_) => OngoingDeliveryPage(),
                   ),
                 );
               },

@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/app_colors.dart';
 import 'rider/screens/home/home_screen.dart';
-import 'rider/screens/auth/login_screen.dart';
+import 'rider/screens/auth/login_screen.dart'; // ✅ keep if file is here
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +42,7 @@ class RaktsancharRiderApp extends StatelessWidget {
         ),
       ),
 
-      // 🔐 Auto login
+      // 🔐 AUTO LOGIN
       home: session != null ? const HomeScreen() : const LoginScreen(),
     );
   }

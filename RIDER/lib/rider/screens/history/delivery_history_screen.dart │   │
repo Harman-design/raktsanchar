@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+class DeliveryHistoryScreen extends StatelessWidget {
+  const DeliveryHistoryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Delivery History")),
+      body: ListView(
+        children: const [
+          ListTile(
+            title: Text("City General Hospital"),
+            subtitle: Text("O+ Blood • 2 Units"),
+            trailing: Text("₹150"),
+          ),
+        ],
+      ),
+    );
+  }
+}
