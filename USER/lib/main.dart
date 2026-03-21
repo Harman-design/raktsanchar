@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       home: const UserAuthGate(),
       routes: {
         '/user/login': (_) => const UserLoginPage(),
-        '/user/dashboard': (_) => DashboardPage(), // ❌ no const
+        '/user/dashboard': (_) => DashboardPage(), 
       },
     );
   }

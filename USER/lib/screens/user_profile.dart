@@ -1,12 +1,50 @@
 import 'package:flutter/material.dart';
+import '../services/supabase_client.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  Map<String, dynamic>? userData;
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfile();
+  }
+
+  Future<void> fetchProfile() async {
+    final user = supabase.auth.currentUser;
+
+    if (user == null) {
+      setState(() => loading = false);
+      return;
+    }
+
+    final data = await supabase
+        .from('profiles')
+        .select()
+        .eq('id', user.id)
+        .single();
+
+    setState(() {
+      userData = data;
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     const primaryColor = Color(0xFFCF2C20);
 
+    if (loading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -14,10 +52,7 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.white,
         title: const Text(
           "Profile",
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Colors.black,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black),
         ),
         actions: [
           TextButton(
@@ -40,7 +75,6 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
             /// Profile Image + Name
             Column(
               children: [
@@ -68,12 +102,9 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  "Siddharth Sharma",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Text(
+                  userData?['name'] ?? "No Name",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 const Text(
@@ -99,8 +130,8 @@ class ProfilePage extends StatelessWidget {
 
             /// Personal Details
             _sectionTitle("Personal Details"),
-            _infoTile(Icons.mail, "Email", "siddharth.s@example.com"),
-            _infoTile(Icons.call, "Phone", "+91 98765 43210"),
+            _infoTile(Icons.mail, "Email", userData?['email'] ?? "No Email"),
+            _infoTile(Icons.call, "Phone", userData?['phone'] ?? "No Phone"),
 
             const SizedBox(height: 28),
 
@@ -136,13 +167,18 @@ class ProfilePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                await supabase.auth.signOut();
+
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/user/login', // your login route
+                  (route) => false,
+                );
+              },
               child: const Text(
                 "Logout",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -182,7 +218,9 @@ class _StatCard extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: highlight ? const Color(0xFFCF2C20).withOpacity(0.1) : Colors.grey.shade100,
+        color: highlight
+            ? const Color(0xFFCF2C20).withOpacity(0.1)
+            : Colors.grey.shade100,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
@@ -215,10 +253,7 @@ Widget _sectionTitle(String text) {
     padding: const EdgeInsets.only(bottom: 12),
     child: Text(
       text,
-      style: const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -231,10 +266,7 @@ Widget _infoTile(IconData icon, String label, String value) {
       label,
       style: const TextStyle(fontSize: 12, color: Colors.grey),
     ),
-    subtitle: Text(
-      value,
-      style: const TextStyle(fontWeight: FontWeight.w600),
-    ),
+    subtitle: Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
   );
 }
 

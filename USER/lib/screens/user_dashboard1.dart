@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:raktsanchar/services/supabase_service.dart';
 import 'user_profile.dart';
 import 'user_notifications.dart';
 import 'donor_network_page.dart';
+import 'dart:async';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -11,10 +13,42 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  int bloodBankCount = 0;
+  Map<String, int> inventory = {};
+  Map<String, dynamic>? latestOrder;
+  bool loading = true;
   bool emergencyOn = true;
   int _currentIndex = 0;
+  late final StreamSubscription _subscription;
 
   final Color primary = const Color(0xFFDE2012);
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchDashboardData();
+
+    _subscription = supabase
+        .from('blood_units')
+        .stream(primaryKey: ['id'])
+        .listen((event) {
+          fetchDashboardData();
+        });
+  }
+
+  Future<void> fetchDashboardData() async {
+    final banks = await SupabaseService.getBloodBankCount();
+    final inv = await SupabaseService.getBloodInventory();
+    final order = await SupabaseService.getLatestOrder();
+
+    setState(() {
+      bloodBankCount = banks;
+      inventory = inv;
+      latestOrder = order;
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       bottomNavigationBar: _bottomNavBar(),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _requestBloodButton(),
     );
   }
@@ -64,8 +97,9 @@ class _DashboardPageState extends State<DashboardPage> {
               Text(
                 "Raktsanchar",
                 style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 "EMERGENCY NETWORK",
@@ -76,7 +110,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
       actions: [
@@ -85,14 +119,11 @@ class _DashboardPageState extends State<DashboardPage> {
           onPressed: () {},
         ),
         IconButton(
-          icon:
-              const Icon(Icons.notifications, color: Colors.grey),
+          icon: const Icon(Icons.notifications, color: Colors.grey),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => const NotificationsPage(),
-              ),
+              MaterialPageRoute(builder: (_) => const NotificationsPage()),
             );
           },
         ),
@@ -113,37 +144,31 @@ class _DashboardPageState extends State<DashboardPage> {
           color: Colors.white,
         ),
         child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 CircleAvatar(
-                  backgroundColor:
-                      primary.withOpacity(.1),
-                  child: Icon(Icons.emergency,
-                      color: primary),
+                  backgroundColor: primary.withOpacity(.1),
+                  child: Icon(Icons.emergency, color: primary),
                 ),
                 const SizedBox(width: 12),
                 Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
                       "Emergency Mode",
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight:
-                              FontWeight.bold),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "Broadcasting Active",
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight:
-                            FontWeight.w600,
-                        color:
-                            Color(0xFFDE2012),
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFDE2012),
                       ),
                     ),
                   ],
@@ -155,8 +180,7 @@ class _DashboardPageState extends State<DashboardPage> {
               activeColor: Colors.white,
               activeTrackColor: primary,
               onChanged: (v) {
-                setState(
-                    () => emergencyOn = v);
+                setState(() => emergencyOn = v);
               },
             ),
           ],
@@ -170,19 +194,29 @@ class _DashboardPageState extends State<DashboardPage> {
     return SizedBox(
       height: 120,
       child: ListView(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         children: [
-          _statCard(Icons.local_hospital,
-              "Nearby Banks", "12", "+2",
-              color: Colors.green),
-          _statCard(Icons.opacity,
-              "Live Inventory", "84%", null,
-              iconColor: Colors.blue),
-          _statCard(Icons.verified,
-              "Last Tested", "2h", "AGO",
-              iconColor: Colors.orange),
+          _statCard(
+            Icons.local_hospital,
+            "Nearby Banks",
+            bloodBankCount.toString(),
+            null,
+          ),
+          _statCard(
+            Icons.opacity,
+            "Live Inventory",
+            "84%",
+            null,
+            iconColor: Colors.blue,
+          ),
+          _statCard(
+            Icons.verified,
+            "Last Tested",
+            "2h",
+            "AGO",
+            iconColor: Colors.orange,
+          ),
         ],
       ),
     );
@@ -198,57 +232,44 @@ class _DashboardPageState extends State<DashboardPage> {
   }) {
     return Container(
       width: 150,
-      margin:
-          const EdgeInsets.only(right: 12),
+      margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(14),
-        border: Border.all(
-            color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon,
-              color: iconColor ?? primary),
+          Icon(icon, color: iconColor ?? primary),
           const SizedBox(height: 8),
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey)),
+          Text(title, style: const TextStyle(fontSize: 12, color: Colors.grey)),
           const Spacer(),
           Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 value,
                 style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight:
-                        FontWeight.bold),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               if (extra != null)
                 Padding(
-                  padding:
-                      const EdgeInsets.only(
-                          left: 6),
+                  padding: const EdgeInsets.only(left: 6),
                   child: Text(
                     extra,
                     style: TextStyle(
                       fontSize: 12,
-                      color:
-                          color ?? Colors.grey,
-                      fontWeight:
-                          FontWeight.bold,
+                      color: color ?? Colors.grey,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
+                ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -259,43 +280,32 @@ class _DashboardPageState extends State<DashboardPage> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        padding:
-            const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
-          borderRadius:
-              BorderRadius.circular(16),
-          border: Border.all(
-              color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade300),
         ),
         child: Column(
           children: [
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment
-                      .spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.route,
-                        color: primary),
-                    const SizedBox(
-                        width: 6),
+                    Icon(Icons.route, color: primary),
+                    const SizedBox(width: 6),
                     const Text(
                       "Delivery in progress",
-                      style: TextStyle(
-                          fontWeight:
-                              FontWeight
-                                  .bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 Text(
-                  "#RK-4421",
-                  style: TextStyle(
-                      fontWeight:
-                          FontWeight.bold,
-                      color: primary),
+                  latestOrder != null
+                      ? "#${latestOrder!['id'].toString().substring(0, 6)}"
+                      : "No Active Order",
+                  style: TextStyle(fontWeight: FontWeight.bold, color: primary),
                 ),
               ],
             ),
@@ -303,8 +313,7 @@ class _DashboardPageState extends State<DashboardPage> {
             LinearProgressIndicator(
               value: 0.66,
               minHeight: 6,
-              backgroundColor:
-                  Colors.grey.shade300,
+              backgroundColor: Colors.grey.shade300,
               color: primary,
             ),
           ],
@@ -314,7 +323,7 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   // ---------------- BLOOD GRID ----------------
- Widget _bloodGrid() {
+  Widget _bloodGrid() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: GridView.count(
@@ -325,33 +334,32 @@ class _DashboardPageState extends State<DashboardPage> {
         mainAxisSpacing: 12,
         childAspectRatio: .7,
         children: [
-          _BloodCard("RBC", "42 Units", Colors.green),
-          _BloodCard("Plasma", "18 Units", Colors.orange),
-          _BloodCard("Platelets", "5 Units", Colors.red),
+          _BloodCard("RBC", "${inventory["RBC"]} Units", Colors.green),
+          _BloodCard("Plasma", "${inventory["Plasma"]} Units", Colors.orange),
+          _BloodCard(
+            "Platelets",
+            "${inventory["Platelets"]} Units",
+            Colors.red,
+          ),
         ],
       ),
     );
   }
 
-
   Widget _sectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight:
-                      FontWeight.bold)),
-          Text("View Inventory",
-              style: TextStyle(
-                  color: primary,
-                  fontWeight:
-                      FontWeight.bold)),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            "View Inventory",
+            style: TextStyle(color: primary, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
@@ -359,49 +367,36 @@ class _DashboardPageState extends State<DashboardPage> {
 
   // ---------------- ACTION BUTTONS ----------------
   Widget _actionButtons() {
-  return Padding(
-    padding: const EdgeInsets.all(16),
-    child: Row(
-      children: [
-        _ActionButton(
-          Icons.map,
-          "Find Donors",
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const DonorNetworkPage(),
-              ),
-            );
-          },
-        ),
-        _ActionButton(
-          Icons.history,
-          "History",
-          onTap: () {},
-        ),
-        _ActionButton(
-          Icons.volunteer_activism,
-          "Donate",
-          onTap: () {},
-        ),
-      ],
-    ),
-  );
-}
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          _ActionButton(
+            Icons.map,
+            "Find Donors",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const DonorNetworkPage()),
+              );
+            },
+          ),
+          _ActionButton(Icons.history, "History", onTap: () {}),
+          _ActionButton(Icons.volunteer_activism, "Donate", onTap: () {}),
+        ],
+      ),
+    );
+  }
 
   // ---------------- FAB ----------------
   Widget _requestBloodButton() {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: 56),
+      padding: const EdgeInsets.only(bottom: 56),
       child: FloatingActionButton.extended(
         backgroundColor: primary,
         onPressed: () {},
-        icon: const Icon(
-            Icons.add_circle),
-        label:
-            const Text("Request Blood Now"),
+        icon: const Icon(Icons.add_circle),
+        label: const Text("Request Blood Now"),
       ),
     );
   }
@@ -411,35 +406,29 @@ class _DashboardPageState extends State<DashboardPage> {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
       selectedItemColor: primary,
-      unselectedItemColor:
-          Colors.grey,
+      unselectedItemColor: Colors.grey,
       onTap: (index) {
-        setState(
-            () => _currentIndex = index);
+        setState(() => _currentIndex = index);
         if (index == 3) {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (_) =>
-                    const ProfilePage()),
+            MaterialPageRoute(builder: (_) => const ProfilePage()),
           );
         }
       },
       items: const [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: "Home"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: "Data"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: "Chat"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile"),
+        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Home"),
+        BottomNavigationBarItem(icon: Icon(Icons.analytics), label: "Data"),
+        BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chat"),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel(); // stops the stream
+    super.dispose();
   }
 }
 
@@ -465,8 +454,11 @@ class _BloodCard extends StatelessWidget {
     }
   }
 
-  String get statusText =>
-      title == "RBC" ? "Safe" : title == "Plasma" ? "Low" : "Critical";
+  String get statusText => title == "RBC"
+      ? "Safe"
+      : title == "Plasma"
+      ? "Low"
+      : "Critical";
 
   @override
   Widget build(BuildContext context) {
@@ -487,8 +479,10 @@ class _BloodCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(20),
@@ -508,12 +502,15 @@ class _BloodCard extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(subtitle,
-            style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        Text(
+          subtitle,
+          style: const TextStyle(fontSize: 12, color: Colors.grey),
+        ),
       ],
     );
   }
 }
+
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -539,10 +536,7 @@ class _ActionButton extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ],
         ),
