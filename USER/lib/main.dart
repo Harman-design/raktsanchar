@@ -1,10 +1,9 @@
-import 'screens/userapplicationfirstpage.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'screens/user_introduction.dart';
 import 'screens/user_login.dart';
-import 'screens/user_dashboard.dart';
+import 'screens/user_dashboard1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const UserAuthGate(),
       routes: {
-  '/user/login': (_) => const UserLoginPage(),
-  '/user/dashboard': (_) => const UserDashboard(),
-  '/user/sos': (_) => const EmergencySOSPage(), 
-},
+        '/user/login': (_) => const UserLoginPage(),
+        '/user/dashboard': (_) => DashboardPage(), 
+      },
     );
   }
 }
@@ -41,12 +39,18 @@ class UserAuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final session = supabase.auth.currentSession;
+    return StreamBuilder<AuthState>(
+      stream: supabase.auth.onAuthStateChange,
+      builder: (context, snapshot) {
+        final session = snapshot.data?.session;
 
-    if (session != null) {
-      return const UserDashboard();
-    }
+        if (session != null) {
+          return DashboardPage(); // ❌ no const
+        }
 
-    return const UserIntroductionPage();
+        return const UserIntroductionPage();
+      },
+    );
   }
 }
+

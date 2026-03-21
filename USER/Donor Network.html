@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Donor Network - Raktsanchar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1295a1",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1a1a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111718] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-30 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-[#111718] dark:text-white flex size-10 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<h2 class="text-[#111718] dark:text-white text-lg font-bold leading-tight tracking-tight">Donor Network</h2>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-xs">location_on</span>
+<span class="text-[10px] uppercase tracking-wider font-semibold text-gray-500">City Hospital, Lucknow</span>
+</div>
+</div>
+<div class="flex w-10 items-center justify-end">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-transparent text-[#111718] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Search Bar Section -->
+<div class="px-4 py-2">
+<label class="flex flex-col min-w-40 h-11 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-gray-100 dark:bg-gray-800">
+<div class="text-[#638588] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111718] dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-[#638588] px-4 pl-2 text-sm font-normal" placeholder="Search by name or locality" value=""/>
+<div class="text-[#638588] flex items-center justify-center pr-4 cursor-pointer">
+<span class="material-symbols-outlined text-xl">tune</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Filter Chips (Blood Groups) -->
+<div class="flex gap-2 p-4 pt-2 overflow-x-auto hide-scrollbar">
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 shadow-sm">
+<p class="text-sm font-bold">All</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 px-5 border border-gray-200 dark:border-gray-700">
+<p class="text-sm font-semibold">O-</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 px-5 border border-gray-200 dark:border-gray-700">
+<p class="text-sm font-semibold">A+</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 px-5 border border-gray-200 dark:border-gray-700">
+<p class="text-sm font-semibold">B+</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 px-5 border border-gray-200 dark:border-gray-700">
+<p class="text-sm font-semibold">AB-</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-gray-100 dark:bg-gray-800 px-5 border border-gray-200 dark:border-gray-700">
+<p class="text-sm font-semibold">O+</p>
+</div>
+</div>
+</header>
+<main class="flex flex-col gap-4 p-4 pb-24">
+<h3 class="text-[#111718] dark:text-white text-base font-bold leading-tight tracking-tight">Active Donors (14)</h3>
+<!-- Donor Card 1: Available -->
+<div class="bg-background-light dark:bg-gray-900 rounded-xl p-4 shadow-soft border border-gray-50 dark:border-gray-800 relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400 font-bold px-4 py-2 rounded-bl-xl text-sm">
+                    O- Negative
+                </div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-16 w-16 ring-2 ring-primary/10" data-alt="Portrait of a young male blood donor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhGKkwOFmE8zV9n6R1LWF64mW9CtNE1Zhd4T8FScnKk2Is76UaUjWnDmzbmXfnz-klhZUifr0CN4Bvra3nUnJTqeGic_S3fGXcv7vKvg_lvgTzkiArsmQuH_WuNv4Kli0AsOdXc4_-iIkdVIA_4XHxrldDVChuIdMqOtxmmC3i1k0KVjIT93VQCr9jMbGYapBTQIFQiwYjcue5SwtKIkcRvVn9lJ81dm3la5I4BLXI3EYB-eQ_lP2hXJIw99XiVD0DxFFt36oU7l6C");'></div>
+<div class="absolute bottom-0 right-0 size-4 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-normal">Rahul Sharma</p>
+<p class="text-[#638588] text-xs font-medium uppercase tracking-wide">Available • 1.2 km away</p>
+<p class="text-gray-400 text-xs mt-1">Donated 4 months ago</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
+<div class="flex items-center gap-1 text-gray-500">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs font-medium">Verified Donor</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2.5 px-6 rounded-lg transition-colors shadow-lg shadow-primary/20">
+                    Contact Donor
+                </button>
+</div>
+</div>
+<!-- Donor Card 2: On Call -->
+<div class="bg-background-light dark:bg-gray-900 rounded-xl p-4 shadow-soft border border-gray-50 dark:border-gray-800 relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400 font-bold px-4 py-2 rounded-bl-xl text-sm">
+                    A+ Positive
+                </div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-16 w-16 ring-2 ring-primary/10" data-alt="Portrait of a professional woman donor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBuIjKc9QUj6moYHr-fJI5HVCHULXCpu24hGncqiBWP3mHPWqDG5PXZ-N25qpxWDfgcP169W6opeFoV7rzOpAqeJ_P_ffnu0oHhrbtz0A3Y1wI0SFgBzxu3hXI9ut3Q6WccU8VeGbxFcwgDBFA-4hmzEtOzupU0ZamS7BEBdv1Mbnz00zTNffG-35F7my7mhVmt0tTxT7gd_Zvl2-fC1ZsgY-fj45RZ-Xdio2s2wVxyfzCGC-C-s0oLAuv5hjxW_iuyzpj8IF6CLBT4");'></div>
+<div class="absolute bottom-0 right-0 size-4 bg-amber-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-normal">Anjali Gupta</p>
+<p class="text-[#638588] text-xs font-medium uppercase tracking-wide text-amber-600 dark:text-amber-400">On Call • 2.8 km away</p>
+<p class="text-gray-400 text-xs mt-1">Last donation: 6 months ago</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
+<div class="flex items-center gap-1 text-gray-500">
+<span class="material-symbols-outlined text-sm">shield</span>
+<span class="text-xs font-medium">Gold Member</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2.5 px-6 rounded-lg transition-colors shadow-lg shadow-primary/20">
+                    Contact Donor
+                </button>
+</div>
+</div>
+<!-- Donor Card 3: Unavailable but Near -->
+<div class="bg-background-light dark:bg-gray-900 rounded-xl p-4 shadow-soft border border-gray-50 dark:border-gray-800 relative overflow-hidden opacity-75">
+<div class="absolute top-0 right-0">
+<div class="bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 font-bold px-4 py-2 rounded-bl-xl text-sm">
+                    B+ Positive
+                </div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-16 w-16 grayscale" data-alt="Portrait of a male donor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrrgp2wmJGogUJ1CJv-rQ2kF19MPluJJVF7g0eBr2FQWajYNv9Wnh1Wl5tUu1k9UML4EInMCrXWi-Lghsd4bSrDOOukllsQkLOSZD1EiKUy8l-tXI7b29Sux2WuZDWSXMLb9bZdbdrV7TzXoitOg2dREa-P4wiLOzt7_AgUgyUDFDAoM6QoceT7wYgNJgm8s5ozG3JtEy27W0zPuwN-FaosKlo8UquR5A4X6M5eOcTSjEfqJPu-no-k7nPhg7B6wr8CbRLppjnaUg1");'></div>
+<div class="absolute bottom-0 right-0 size-4 bg-gray-400 border-2 border-white dark:border-gray-900 rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-normal">Vikram Singh</p>
+<p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Unavailable • 0.5 km away</p>
+<p class="text-gray-400 text-xs mt-1">Donated 2 weeks ago</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
+<div class="flex items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined text-sm">event_busy</span>
+<span class="text-xs font-medium">Busy until 6:00 PM</span>
+</div>
+<button class="bg-gray-200 dark:bg-gray-800 text-gray-400 text-sm font-bold py-2.5 px-6 rounded-lg cursor-not-allowed" disabled="">
+                    Notify Me
+                </button>
+</div>
+</div>
+<!-- Donor Card 4 -->
+<div class="bg-background-light dark:bg-gray-900 rounded-xl p-4 shadow-soft border border-gray-50 dark:border-gray-800 relative overflow-hidden">
+<div class="absolute top-0 right-0">
+<div class="bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400 font-bold px-4 py-2 rounded-bl-xl text-sm">
+                    O+ Positive
+                </div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-16 w-16 ring-2 ring-primary/10" data-alt="Portrait of a smiling young woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAHGu51xXpm9KxPLmXXYym4EJPZ7vSzD1ZdM8KM8huJc94Q8afrmLwb6-5N4OzzzYOn6osA8G_5r4DNSxGX2pcJ09jSUzKcGxSQaI4WRXeqtebzhFWr8UyqyFx2qTlg7oPMuBxU3V4qatAJqtFKaMT2BncJUl3Pt-Cr4XvNF3wF2cz_sTrEEDLNpgeyxioFeqp-k7Ez8HbZ6_7Xf3fPSWQzVAm8qiIIB_3E4DoxNWZJjMLkNRAgzC3hY_-zh_WlRwdNJU_-99P1TXSN");'></div>
+<div class="absolute bottom-0 right-0 size-4 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-normal">Sana Khan</p>
+<p class="text-[#638588] text-xs font-medium uppercase tracking-wide">Available • 4.1 km away</p>
+<p class="text-gray-400 text-xs mt-1">Donated 3 months ago</p>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
+<div class="flex items-center gap-1 text-gray-500">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span class="text-xs font-medium">Regular Donor</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2.5 px-6 rounded-lg transition-colors shadow-lg shadow-primary/20">
+                    Contact Donor
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg border-t border-gray-100 dark:border-gray-800 px-6 py-3 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">home</span>
+<span class="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-widest">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-primary">hub</span>
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Network</span>
+</div>
+<div class="relative -top-6">
+<button class="size-14 bg-primary text-white rounded-full flex items-center justify-center shadow-xl shadow-primary/30 border-4 border-white dark:border-gray-950">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">list_alt</span>
+<span class="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-widest">Requests</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">person</span>
+<span class="text-[10px] font-bold text-gray-400 group-hover:text-primary uppercase tracking-widest">Profile</span>
+</div>
+</nav>
+<!-- Map View Toggle (Floating Action) -->
+<div class="fixed bottom-24 right-6 z-40">
+<button class="bg-gray-900 dark:bg-white dark:text-black text-white px-4 py-2.5 rounded-full flex items-center gap-2 shadow-2xl">
+<span class="material-symbols-outlined text-sm">map</span>
+<span class="text-xs font-bold uppercase tracking-wider">Map View</span>
+</button>
+</div>
+</body></html>
